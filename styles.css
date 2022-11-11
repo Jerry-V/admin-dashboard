@@ -1,3 +1,82 @@
-div {
-    background-color: lightgreen;
+body {
+    margin: 0px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 150px 1fr;
+    height: 100vh;
+}
+
+.header {
+    background-color: rgb(243, 200, 200);
+    display: grid;
+    grid-area: 1 / 2 / 2 / -1;
+    grid-template-columns: 1fr 300px;
+}
+
+.user-greeting {
+    display: grid;
+    grid-template-columns: 100px 1fr; /* Adjust width later */
+}
+
+.user-greeting img {
+    justify-self: center;
+    align-self: center;
+}
+
+/*
+custom icons for li's
+https://web.dev/css-marker-pseudo-element/
+*/
+
+.sidebar {
+    background-color: rgb(49, 154, 240);
+    grid-area: 1 / 1 / -1 / 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    grid-template-rows: repeat(4, min-content);
+    color: white;
+}
+
+.sidebar ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.sidebar div {
+    border: solid red 1px;
+}
+
+.sidebar li {
+    list-style: none;
+
+}
+
+.main-content {
+    background-color: whitesmoke;
+    grid-area: 2 / 2 / -1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    grid-template-rows: 100px 1fr;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.projects h2 {
+    grid-column: 1 / -1;
+}
+
+.card {
+    border: solid blue 2px;
+    width: fit-content;
+    list-style: none;
+    justify-self: center;
+    align-self: center;
 }
