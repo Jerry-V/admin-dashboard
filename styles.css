@@ -32,29 +32,79 @@ custom icons for li's
 https://web.dev/css-marker-pseudo-element/
 */
 
+:root {
+    --icon-size: 1em;
+    --icon-logo-scale: 2;
+    --sidebar-mainRowGap: 2em;
+    --sidebar-subRowGap: .25em;
+    --sidebar-subColWidth: 2em;
+    --sidebar-clickablePadding: .2em;
+    --sidebar-color: rgb(49, 154, 240);
+}
+
 .sidebar {
-    background-color: rgb(49, 154, 240);
+    background-color: var(--sidebar-color);
     grid-area: 1 / 1 / -1 / 2;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: var(--sidebar-mainRowGap);
     grid-template-rows: repeat(4, min-content);
+    font-size: 1.5em;
     color: white;
+    border-style: none ridge none none;
+    border-color: var(--sidebar-color);
+    padding: .5em;
+}
+
+/* Used mask for changing color as this guide instructs:
+https://css-tricks.com/change-color-of-svg-on-hover/
+*/
+
+
+.icon {
+    display: inline-block;
+    background: white;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+.sidebar li {
+    display: grid;
+    list-style: none;
+    grid-template-columns: var(--sidebar-subColWidth) 1fr;
+    align-items: center;
 }
 
 .sidebar ul {
     padding: 0px;
     margin: 0px;
+    display: grid;
+    row-gap: var(--sidebar-subRowGap);
 }
 
-.sidebar div {
-    border: solid red 1px;
+.sidebar span {
+    justify-self: center;
 }
 
-.sidebar li {
-    list-style: none;
-
+.logo span{
+    height: calc(var(--icon-logo-scale) * var(--icon-size));
+    width: calc(var(--icon-logo-scale) * var(--icon-size));
 }
+
+.sidebar p {
+    width: fit-content;
+    padding: var(--sidebar-clickablePadding);
+    margin: 0px;
+}
+
+.nav1 p:hover, .nav2 p:hover {
+    cursor: pointer;
+    background-color: #e2e8f03a;
+    border-radius: .5em;
+}
+
 
 .main-content {
     background-color: #e2e8f0;
@@ -114,7 +164,7 @@ https://materialdesignicons.com/
     cursor: pointer;
 }
 
-p {
+.card p {
     color: grey;
 }
 
