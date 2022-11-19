@@ -1,20 +1,23 @@
 body {
     margin: 0px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.main-container {
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-template-rows: 150px 1fr;
+    grid-template-rows: 200px 1fr;
+    grid-template-areas: 
+    'sidebar header'
+    'sidebar content';
     height: 100vh;
 }
 
 .header {
-    background-color: rgb(243, 200, 200);
+    background-color: var(--header-color);
     display: grid;
-    grid-area: 1 / 2 / 2 / -1;
     grid-template-columns: 1fr 300px;
+    grid-area: header;
+    /* background-image: url(background_artwork/3840x2160/Mandalorian\ Skull\ Wallpaper\ 4k\ Horizontal\ swmand4.jpg);
+    background-position: center;
+    background-size: contain; */
 }
 
 .user-greeting {
@@ -35,16 +38,21 @@ https://web.dev/css-marker-pseudo-element/
 :root {
     --icon-size: 1em;
     --icon-logo-scale: 2;
+    --header-color:#d6d3d1;
     --sidebar-mainRowGap: 2em;
     --sidebar-subRowGap: .25em;
     --sidebar-subColWidth: 2em;
     --sidebar-clickablePadding: .2em;
-    --sidebar-color: rgb(49, 154, 240);
+    --sidebar-color: #888c92;
+    --card-color: whitesmoke;
+    --card-radius: 1em;
+    --card-padding: 1em;
+    --card-text-color: grey;
 }
 
 .sidebar {
     background-color: var(--sidebar-color);
-    grid-area: 1 / 1 / -1 / 2;
+    grid-area: sidebar;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--sidebar-mainRowGap);
@@ -108,77 +116,97 @@ https://css-tricks.com/change-color-of-svg-on-hover/
 
 .main-content {
     background-color: #e2e8f0;
+    grid-area: content;
     display: grid;
     gap: 1em;
     padding: 1em;
+    grid-template-columns: 1fr 300px;
+    /*
+    https://lambrous.github.io/odin-admin-dashboard/
+    This guy does the site layout in a MUCH nicer way
+    Below code is following after his methods, it is
+    MUCH more succinct. I should layout sites like this
+    more often.
+    */
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+    'projects announcements'
+    'projects trending';
 }
 
 /* Icons from:
 https://materialdesignicons.com/
 */
-
-.projects {
-    display: grid;
-    grid-area: 1 / 1 / 3 / 2;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-template-rows: 3em repeat(auto-fit, 250px);
-    gap: 1em;
-}
-
-
-.projects h2 {
+.section-title {
     grid-column: 1 / -1;
     justify-self: left;
     align-self: center;
-    margin: 0px;
-    width: fit-content;
+}
 
+.projects {
+    grid-area: projects;
+    gap: 1em;
+}
+
+.projects .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: 250px;
+    gap: 2em;
+    padding-bottom: 2em;
 }
 
 .card {
-    box-sizing: border-box;
-    list-style: none;
-    background-color: whitesmoke;
+    background-color: var(--card-color);
     box-shadow: 0px 3px 2px #ccc;
-    padding: 0 1em 1em 1em;
-    height: 100%;
-    justify-self: center;
-    align-self: center;
+    padding: var(--card-padding);
     border-left: solid #eab308 10px;
-    border-radius: .5em;
-    overflow: hidden;
-    /* position set so the buttons will not move from overflow text */
-    position: relative;
+    border-radius: var(--card-radius);
+    display: flex;
+    flex-direction: column;
 }
 
-.card-content h2, .card-content p{
+.card-title, .card-text{
     margin: 0px;
 }
 
-.card-content {
-    padding-top: 1em;
-    overflow: hidden;
+.card-title {
+    margin-bottom: .25em;
+    width: fit-content; /* so the hover only works on the title text */
 }
 
-.card-content h2:hover {
+.card-title:hover {
     cursor: pointer;
 }
 
-.card p {
-    color: grey;
+/*
+https://css-tricks.com/almanac/properties/l/line-clamp/
+line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
+*/
+
+.card-text {
+    color: var(--card-text-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-buttons {
-    justify-self: right;
-    display: grid;
-    gap: 1em;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* fixes buttons on the bottom right independent of overflow text */
-    position: absolute;
-    bottom: 1em;
-    right: 1em;
-    padding: .25em;
-    background-color: inherit;
+    /*
+    https://lambrous.github.io/odin-admin-dashboard/
+    Referenced this guy's work on card setup, its pretty slick.
+    Setting margin-top to auto seems to fix the buttons to the
+    bottom of the card nicely.
+    */
+    /* The "margin-top: auto;" setting puts the buttons in the proper place
+    at the bottom of the card. I don't perfectly understand why, but I am
+    rolling with it. :D */
+    margin-top: auto; 
+    align-self: flex-end;
+    display: flex;
+    gap: 1.5em;
+    padding: .25em;   
 }
 
 .card-buttons button {
@@ -189,7 +217,6 @@ https://materialdesignicons.com/
     background-size: cover;
     background-repeat: no-repeat;
     justify-content: center;
-    resize: both;
 }
 
 .card-buttons button:hover {
@@ -210,10 +237,95 @@ https://materialdesignicons.com/
     background-image: url(./svg-files/source-fork.svg);
 }
 
-.announcements {
-    grid-area: 1 / 2 / 2 / 3;
+.announcement-section {
+    grid-area: announcements;
 }
 
-.trending {
-    grid-area: 2  / 2 / 3 / 3;
+.announcements {
+    background-color: var(--card-color);
+    padding: var(--card-padding);
+    border-radius: 1em;
+}
+
+.announcements .card-text {
+    -webkit-line-clamp: 3;
+}
+
+.announcements hr {
+    color: lightgrey;
+    border: solid 1px lightgrey;
+    margin: 1em 0 1em 0;
+}
+
+.trending-section {
+    grid-area: trending;
+}
+
+.trends {
+    background-color: var(--card-color);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+p {
+    margin: 0px;
+}
+
+.trend {
+/*     border: solid blue 1px; */
+    display: flex;
+    justify-content: flex-start;
+    gap: .75em;
+    align-items: center;
+}
+
+.picture {
+    background-image: url(svg-files/cog.svg);
+    width: 60px;
+    height: 60px;
+    /* border: 1px solid red; */
+    border-radius:50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.trend .account {
+    background-color: #eab20846;
+    padding: .5em;
+    border-radius: 1em;
+}
+
+.trend .username {
+    font-weight: 600;
+    margin-bottom: .2em;
+    width: min-content;
+}
+
+.trend .username:hover {
+    cursor: pointer;
+    
+}
+
+.trend .picture:hover {
+    cursor: pointer;
+}
+
+.trend-1 .picture{
+    background-image: url(profile_artwork/f5f5a9c8110bc3db0b3098d06dd1762ad8e0bda6r1-2048-2048v2_hq.jpg);
+}
+
+.trend-2 .picture{
+    background-image: url(profile_artwork/e53711089cbaae08da075632fda8eb5d0e10981br1-2048-2048v2_hq.jpg);
+}
+
+.trend-3 .picture{
+    background-image: url(profile_artwork/427405e158d8057f7ae3f43eda9930aad7cc9885r1-2048-2048v2_hq.jpg);
+}
+
+.trend-4 .picture{
+    background-image: url(profile_artwork/c22a9ec52f59aa97aaa183e42a0a7befdc803a53r1-2048-2048v2_hq.jpg);
 }
