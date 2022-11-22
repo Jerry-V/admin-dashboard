@@ -1,33 +1,243 @@
+:root {
+    --icon-size: 1em;
+    --icon-logo-scale: 2;
+    --picture-size: 60px;
+    --hover-color-light: #ddd;
+    --sidebar-mainRowGap: 2em;
+    --sidebar-subRowGap: .25em;
+    --sidebar-subColWidth: 2em;
+    --sidebar-clickablePadding: .2em;
+    --sidebar-color: #888c92;
+    /*
+    sidebar background image: https://pin.it/7zLpfBh and https://pin.it/cjzerG6 composited
+    riginal maker's website: http://www.sevristh.co.uk/textures.html
+    main background: https://www.artstation.com/artwork/Y8LKP by Tysen Johnson
+    */
+    --sidebar-background-image: url(background_textures/composite.jpg);
+    --card-color: #f5f5f5bd;
+    --card-radius: 1em;
+    --card-text-color: black;
+    --card-btn-size: 2.5em;
+    --color-gold-yellow: #e9b517d7;
+    --color-gold-faded: #ffbf0046;
+    --trend1-picture: url(profile_artwork/f5f5a9c8110bc3db0b3098d06dd1762ad8e0bda6r1-2048-2048v2_hq.jpg);
+    --trend2-picture: url(profile_artwork/e53711089cbaae08da075632fda8eb5d0e10981br1-2048-2048v2_hq.jpg);
+    --trend3-picture: url(profile_artwork/427405e158d8057f7ae3f43eda9930aad7cc9885r1-2048-2048v2_hq.jpg);
+    --trend4-picture: url(profile_artwork/c22a9ec52f59aa97aaa183e42a0a7befdc803a53r1-2048-2048v2_hq.jpg);
+}
+
+@font-face {
+    /* https://www.fontspace.com/anakinmono-font-f16263 */
+    font-family: AnakinMono;
+    src: url(starwars-fonts/AnakinmonoRegular-n1lP.ttf);
+}
+
+@font-face {
+    /* https://www.fontspace.com/engli-besh-font-f14757 */
+    font-family: EngliBesh;
+    src: url(starwars-fonts/EngliBesh-KG3W.ttf);
+}
+
+@font-face {
+    /* https://www.fontspace.com/aurebesh-english-font-f35314 */
+    font-family: AureBesh;
+    src: url(starwars-fonts/AurebeshEnglishRegular-rjeO.ttf);
+}
+
+@font-face {
+    /* https://www.fontspace.com/development-hell-font-f24019 */
+    font-family: DevelopmentHell;
+    src: url(starwars-fonts/DevelopmentHell-KP3A.ttf);
+}
+
 body {
     margin: 0px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: AnakinMono;
+
     display: grid;
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: 200px 1fr;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
     grid-template-areas: 
     'sidebar header'
     'sidebar content';
     height: 100vh;
+    background-image: url(background_textures/tysen-johnson-atat-hangar-art-station.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.card-default {
+    background-color: var(--card-color);
+    box-shadow: 0px 3px 10px #ccc;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 .header {
-    background-color: var(--header-color);
+    border-radius: unset;
     display: grid;
     grid-template-columns: 1fr 300px;
     grid-area: header;
-    /* background-image: url(background_artwork/3840x2160/Mandalorian\ Skull\ Wallpaper\ 4k\ Horizontal\ swmand4.jpg);
+    grid-template-areas:
+    'search account'
+    'lower lower';
+    padding: 1em 2em 1em 2em;
+}
+
+
+.picture {
+    width: 60px;
+    height: 60px;
+    /* flex-shrink prevents the header profile picture from getting squished*/
+    flex-shrink: 0;
+    border-radius:50%;
     background-position: center;
-    background-size: contain; */
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
-.user-greeting {
-    display: grid;
-    grid-template-columns: 100px 1fr; /* Adjust width later */
+.header .picture {
+    background-image: var(--trend2-picture);
 }
 
-.user-greeting img {
-    justify-self: center;
-    align-self: center;
+.account .picture {
+    width: calc(.8 * var(--picture-size));
+    height: calc(.8 * var(--picture-size));
+}
+
+.header .search {
+    grid-area: search;
+    display: flex;
+    align-items: center;
+}
+
+.search .button {
+    width: 2.5em;
+    height: 2.5em;
+    min-width: 2.5em;
+    max-height: 2.5em;
+    background-image: url(svg-files/magnify.svg);
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.search .button:hover {
+    background-color: var(--hover-color-light);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.search input {
+    margin-left: 1em;
+    width: min(80%, 600px);
+    height: 1.5em;
+    padding: .5em 1em;
+    /* border-radius: 2em; */
+    border: solid var(--color-gold-yellow) 3px;
+    font-family: inherit;
+    
+    --notchSize: .5rem;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
+}
+
+.search input:focus {
+    border: ridge maroon 3px;
+    outline: none;
+}
+
+.header .account {
+    grid-area: account;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.header .notifications {
+    width: 2.5em;
+    height: 2.5em;
+    background-image: url(svg-files/bell-ring-outline.svg);
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header .notifications:hover{
+    background-color: var(--hover-color-light);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.account .name {
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.header .lower {
+    grid-area: lower;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.profile {
+    display: flex;
+    gap: 1em;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+.profile-name .name {
+    font-size: 1.5em;
+}
+
+.header .buttons {
+    display: flex;
+    gap: 1em;
+
+}
+
+.lower button {
+    width: 80px;
+    height: 30px;
+    background-color: var(--color-gold-yellow);
+    /* border-radius: 1em; */
+    border: none;
+    font-weight: bold;
+    font-family: inherit;
+    
+    --notchSize: .5rem;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
+}
+
+.lower button:hover {
+    cursor: pointer;
 }
 
 /*
@@ -35,33 +245,21 @@ custom icons for li's
 https://web.dev/css-marker-pseudo-element/
 */
 
-:root {
-    --icon-size: 1em;
-    --icon-logo-scale: 2;
-    --header-color:#d6d3d1;
-    --sidebar-mainRowGap: 2em;
-    --sidebar-subRowGap: .25em;
-    --sidebar-subColWidth: 2em;
-    --sidebar-clickablePadding: .2em;
-    --sidebar-color: #888c92;
-    --card-color: whitesmoke;
-    --card-radius: 1em;
-    --card-padding: 1em;
-    --card-text-color: grey;
-}
-
 .sidebar {
-    background-color: var(--sidebar-color);
+    box-sizing: border-box;
+    /* background-color: var(--sidebar-color); */
     grid-area: sidebar;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--sidebar-mainRowGap);
-    grid-template-rows: repeat(4, min-content);
+    grid-template-rows: repeat(3, min-content);
     font-size: 1.5em;
     color: white;
-    border-style: none ridge none none;
+    border-style: ridge;
     border-color: var(--sidebar-color);
     padding: .5em;
+    background-image: var(--sidebar-background-image);
+    height: fit-content;
 }
 
 /* Used mask for changing color as this guide instructs:
@@ -83,6 +281,20 @@ https://css-tricks.com/change-color-of-svg-on-hover/
     list-style: none;
     grid-template-columns: var(--sidebar-subColWidth) 1fr;
     align-items: center;
+    background-color: var(--color-gold-faded);
+    
+    --notchSize: .5rem;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
 }
 
 .sidebar ul {
@@ -109,13 +321,34 @@ https://css-tricks.com/change-color-of-svg-on-hover/
 
 .nav1 p:hover, .nav2 p:hover {
     cursor: pointer;
-    background-color: #e2e8f03a;
-    border-radius: .5em;
+    background-color: var(--color-gold-faded);
+    
+    /*
+    different ways of getting custom borders:
+    https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
+    clip-path generator:
+    https://www.cssportal.com/css-clip-path-generator/
+    good way of making sure the notches are at a 45 degree angle:
+    https://css-tricks.com/notched-boxes/
+    below code is straight from that example
+    */
+    --notchSize: .5rem;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
 }
 
 
 .main-content {
-    background-color: #e2e8f0;
+/*     background-color: #e2e8f0; */
     grid-area: content;
     display: grid;
     gap: 1em;
@@ -137,11 +370,7 @@ https://css-tricks.com/change-color-of-svg-on-hover/
 /* Icons from:
 https://materialdesignicons.com/
 */
-.section-title {
-    grid-column: 1 / -1;
-    justify-self: left;
-    align-self: center;
-}
+
 
 .projects {
     grid-area: projects;
@@ -152,16 +381,24 @@ https://materialdesignicons.com/
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows: 250px;
-    gap: 2em;
+    gap: 1em;
     padding-bottom: 2em;
 }
 
+
+
+.section-title {
+    grid-column: 1 / -1;
+    justify-self: left;
+    align-self: center;
+    margin: 0px 0px .5em 0px;
+    width: fit-content;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
 .card {
-    background-color: var(--card-color);
-    box-shadow: 0px 3px 2px #ccc;
-    padding: var(--card-padding);
-    border-left: solid #eab308 10px;
-    border-radius: var(--card-radius);
+    border-left: solid var(--color-gold-faded) 1rem;
     display: flex;
     flex-direction: column;
 }
@@ -205,24 +442,25 @@ line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
     margin-top: auto; 
     align-self: flex-end;
     display: flex;
-    gap: 1.5em;
+    gap: 1em;
     padding: .25em;   
 }
 
 .card-buttons button {
     border: none;
     background-color: inherit;
-    width: 2em;
-    height: 2em;
-    background-size: cover;
+    width: var(--card-btn-size);
+    height: var(--card-btn-size);
+    background-size: 80%;
     background-repeat: no-repeat;
+    background-position: center;
     justify-content: center;
 }
 
 .card-buttons button:hover {
     cursor: pointer;
     background-color: #ddd;
-    border-radius: .5em;
+    border-radius: 50%;
 }
 
 .btn-favorite {
@@ -242,9 +480,7 @@ line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
 }
 
 .announcements {
-    background-color: var(--card-color);
-    padding: var(--card-padding);
-    border-radius: 1em;
+
 }
 
 .announcements .card-text {
@@ -262,9 +498,6 @@ line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
 }
 
 .trends {
-    background-color: var(--card-color);
-    border-radius: var(--card-radius);
-    padding: var(--card-padding);
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -282,21 +515,25 @@ p {
     align-items: center;
 }
 
-.picture {
-    background-image: url(svg-files/cog.svg);
-    width: 60px;
-    height: 60px;
-    /* border: 1px solid red; */
-    border-radius:50%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
+
 
 .trend .account {
-    background-color: #eab20846;
+    background-color: var(--color-gold-faded);
     padding: .5em;
-    border-radius: 1em;
+    /* border-radius: 1em; */
+    
+    --notchSize: 1rem;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
 }
 
 .trend .username {
@@ -315,17 +552,17 @@ p {
 }
 
 .trend-1 .picture{
-    background-image: url(profile_artwork/f5f5a9c8110bc3db0b3098d06dd1762ad8e0bda6r1-2048-2048v2_hq.jpg);
+    background-image: var(--trend1-picture);
 }
 
 .trend-2 .picture{
-    background-image: url(profile_artwork/e53711089cbaae08da075632fda8eb5d0e10981br1-2048-2048v2_hq.jpg);
+    background-image: var(--trend2-picture);
 }
 
 .trend-3 .picture{
-    background-image: url(profile_artwork/427405e158d8057f7ae3f43eda9930aad7cc9885r1-2048-2048v2_hq.jpg);
+    background-image: var(--trend3-picture);
 }
 
 .trend-4 .picture{
-    background-image: url(profile_artwork/c22a9ec52f59aa97aaa183e42a0a7befdc803a53r1-2048-2048v2_hq.jpg);
+    background-image: var(--trend4-picture);
 }
