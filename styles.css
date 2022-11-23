@@ -1,23 +1,44 @@
+/*
+Pictoral Citations:
+Sidebar background images:
+https://pin.it/7zLpfBh
+https://pin.it/cjzerG6
+I composited them together in paint and here is the original texture creator's website: 
+http://www.sevristh.co.uk/textures.html
+
+The main Star Wars background: https://www.artstation.com/artwork/Y8LKP
+"Deployment" by: Tysen Johnson
+
+SVG icons from: https://materialdesignicons.com/
+
+Dashboard SVG icon:
+https://www.svgrepo.com/svg/97486/death-star
+
+Profile pictures from:
+https://aminoapps.com/c/star-wars/page/blog/profile-icons-trooper-02/GqFn_u0qXkzpagmBZDXLdnVKVYEEKqHB
+"PROFILE ICONS / TROOPER 02" by: IIIiIitia.
+
+Notes:
+I was feeling my way through creating this site.
+As such the class nomenclature and class condensation is not very nea. I tidied it up
+a bit, its not as good as other examples (where you know what you are doing from the begining), but eh... it works.
+This was a good learning process for me: figuring out how to use SVG icons, propagating the cards,
+using grid and so on. It only required one thing... time... lots of time, and DuckDuckGo :D
+*/
+
 :root {
-    --icon-size: 1em;
-    --icon-logo-scale: 2;
-    --picture-size: 60px;
-    --hover-color-light: #ddd;
-    --sidebar-mainRowGap: 2em;
+    --header-account-picture-size: 60px;
+    --sidebar-icon-size: 1em;
+    --sidebar-icon-logo-scale: 2;
+    --sidebar-mainRowGap: .75em;
     --sidebar-subRowGap: .25em;
     --sidebar-subColWidth: 2em;
     --sidebar-clickablePadding: .2em;
-    --sidebar-color: #888c92;
-    /*
-    sidebar background image: https://pin.it/7zLpfBh and https://pin.it/cjzerG6 composited
-    riginal maker's website: http://www.sevristh.co.uk/textures.html
-    main background: https://www.artstation.com/artwork/Y8LKP by Tysen Johnson
-    */
     --sidebar-background-image: url(background_textures/composite.jpg);
-    --card-color: #f5f5f5bd;
-    --card-radius: 1em;
-    --card-text-color: black;
     --card-btn-size: 2.5em;
+    --color-cards-background: #f5f5f5bd;
+    --color-grey: #888c92;
+    --color-hover-light: #ddd;
     --color-gold-yellow: #e9b517d7;
     --color-gold-faded: #ffbf0046;
     --trend1-picture: url(profile_artwork/f5f5a9c8110bc3db0b3098d06dd1762ad8e0bda6r1-2048-2048v2_hq.jpg);
@@ -26,6 +47,7 @@
     --trend4-picture: url(profile_artwork/c22a9ec52f59aa97aaa183e42a0a7befdc803a53r1-2048-2048v2_hq.jpg);
 }
 
+/* Star Wars Fonts b/c STAR WARS! */
 @font-face {
     /* https://www.fontspace.com/anakinmono-font-f16263 */
     font-family: AnakinMono;
@@ -53,8 +75,8 @@
 body {
     margin: 0px;
     /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-family: AnakinMono;
-
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: min-content 1fr;
@@ -66,11 +88,10 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-
 }
 
 .card-default {
-    background-color: var(--card-color);
+    background-color: var(--color-cards-background);
     box-shadow: 0px 3px 10px #ccc;
     padding: 1rem;
     border-radius: 1rem;
@@ -86,7 +107,6 @@ body {
     'lower lower';
     padding: 1em 2em 1em 2em;
 }
-
 
 .picture {
     width: 60px;
@@ -104,8 +124,8 @@ body {
 }
 
 .account .picture {
-    width: calc(.8 * var(--picture-size));
-    height: calc(.8 * var(--picture-size));
+    width: calc(.8 * var(--header-account-picture-size));
+    height: calc(.8 * var(--header-account-picture-size));
 }
 
 .header .search {
@@ -126,7 +146,7 @@ body {
 }
 
 .search .button:hover {
-    background-color: var(--hover-color-light);
+    background-color: var(--color-hover-light);
     border-radius: 50%;
     cursor: pointer;
 }
@@ -139,7 +159,15 @@ body {
     /* border-radius: 2em; */
     border: solid var(--color-gold-yellow) 3px;
     font-family: inherit;
-    
+    /*
+    different ways of getting custom borders:
+    https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
+    clip-path generator:
+    https://www.cssportal.com/css-clip-path-generator/
+    good way of making sure the notches are at a 45 degree angle:
+    https://css-tricks.com/notched-boxes/
+    below code is from said example:
+    */
     --notchSize: .5rem;
     clip-path: 
       polygon(
@@ -176,7 +204,7 @@ body {
 }
 
 .header .notifications:hover{
-    background-color: var(--hover-color-light);
+    background-color: var(--color-hover-light);
     border-radius: 50%;
     cursor: pointer;
 }
@@ -184,6 +212,11 @@ body {
 .account .name {
     font-weight: bold;
     font-size: 1.25em;
+}
+
+.account .name:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .header .lower {
@@ -240,14 +273,9 @@ body {
     cursor: pointer;
 }
 
-/*
-custom icons for li's
-https://web.dev/css-marker-pseudo-element/
-*/
-
 .sidebar {
     box-sizing: border-box;
-    /* background-color: var(--sidebar-color); */
+    /* background-color: var(--color-grey); */
     grid-area: sidebar;
     display: grid;
     grid-template-columns: 1fr;
@@ -256,24 +284,22 @@ https://web.dev/css-marker-pseudo-element/
     font-size: 1.5em;
     color: white;
     border-style: ridge;
-    border-color: var(--sidebar-color);
+    border-color: var(--color-grey);
     padding: .5em;
     background-image: var(--sidebar-background-image);
     height: fit-content;
 }
 
-/* Used mask for changing color as this guide instructs:
-https://css-tricks.com/change-color-of-svg-on-hover/
-*/
-
-
 .icon {
     display: inline-block;
     background: white;
+    /* Used mask for changing color as this guide instructs:
+    https://css-tricks.com/change-color-of-svg-on-hover/
+    */
     mask-size: cover;
     mask-repeat: no-repeat;
-    width: var(--icon-size);
-    height: var(--icon-size);
+    width: var(--sidebar-icon-size);
+    height: var(--sidebar-icon-size);
 }
 
 .sidebar li {
@@ -282,7 +308,6 @@ https://css-tricks.com/change-color-of-svg-on-hover/
     grid-template-columns: var(--sidebar-subColWidth) 1fr;
     align-items: center;
     background-color: var(--color-gold-faded);
-    
     --notchSize: .5rem;
     clip-path: 
       polygon(
@@ -304,13 +329,22 @@ https://css-tricks.com/change-color-of-svg-on-hover/
     row-gap: var(--sidebar-subRowGap);
 }
 
+
 .sidebar span {
     justify-self: center;
 }
 
+.logo li {
+    padding: .2em;
+}
+
+.logo-text {
+    font-family: EngliBesh;
+}
+
 .logo span{
-    height: calc(var(--icon-logo-scale) * var(--icon-size));
-    width: calc(var(--icon-logo-scale) * var(--icon-size));
+    height: calc(var(--sidebar-icon-logo-scale) * var(--sidebar-icon-size));
+    width: calc(var(--sidebar-icon-logo-scale) * var(--sidebar-icon-size));
 }
 
 .sidebar p {
@@ -322,16 +356,6 @@ https://css-tricks.com/change-color-of-svg-on-hover/
 .nav1 p:hover, .nav2 p:hover {
     cursor: pointer;
     background-color: var(--color-gold-faded);
-    
-    /*
-    different ways of getting custom borders:
-    https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
-    clip-path generator:
-    https://www.cssportal.com/css-clip-path-generator/
-    good way of making sure the notches are at a 45 degree angle:
-    https://css-tricks.com/notched-boxes/
-    below code is straight from that example
-    */
     --notchSize: .5rem;
     clip-path: 
       polygon(
@@ -346,9 +370,8 @@ https://css-tricks.com/change-color-of-svg-on-hover/
       );
 }
 
-
 .main-content {
-/*     background-color: #e2e8f0; */
+    /* background-color: #e2e8f0; */
     grid-area: content;
     display: grid;
     gap: 1em;
@@ -360,17 +383,12 @@ https://css-tricks.com/change-color-of-svg-on-hover/
     Below code is following after his methods, it is
     MUCH more succinct. I should layout sites like this
     more often.
-    */
+   */
     grid-template-rows: min-content 1fr;
     grid-template-areas:
     'projects announcements'
     'projects trending';
 }
-
-/* Icons from:
-https://materialdesignicons.com/
-*/
-
 
 .projects {
     grid-area: projects;
@@ -384,8 +402,6 @@ https://materialdesignicons.com/
     gap: 1em;
     padding-bottom: 2em;
 }
-
-
 
 .section-title {
     grid-column: 1 / -1;
@@ -416,13 +432,11 @@ https://materialdesignicons.com/
     cursor: pointer;
 }
 
-/*
-https://css-tricks.com/almanac/properties/l/line-clamp/
-line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
-*/
-
 .card-text {
-    color: var(--card-text-color);
+    /*
+    https://css-tricks.com/almanac/properties/l/line-clamp/
+    line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
+    */
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
@@ -438,7 +452,8 @@ line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
     */
     /* The "margin-top: auto;" setting puts the buttons in the proper place
     at the bottom of the card. I don't perfectly understand why, but I am
-    rolling with it. :D */
+    rolling with it. :D
+    */
     margin-top: auto; 
     align-self: flex-end;
     display: flex;
@@ -479,18 +494,27 @@ line-clamp and possibly using -webkit-line-clamp lets me limit text overflow
     grid-area: announcements;
 }
 
-.announcements {
-
-}
-
 .announcements .card-text {
     -webkit-line-clamp: 3;
 }
 
 .announcements hr {
-    color: lightgrey;
-    border: solid 1px lightgrey;
+    background-color: var(--color-grey);
+    border: solid 2px var(--color-grey);
     margin: 1em 0 1em 0;
+    
+    --notchSize: .1em;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
 }
 
 .trending-section {
@@ -508,20 +532,17 @@ p {
 }
 
 .trend {
-/*     border: solid blue 1px; */
+    /* border: solid blue 1px; */
     display: flex;
     justify-content: flex-start;
     gap: .75em;
     align-items: center;
 }
 
-
-
 .trend .account {
     background-color: var(--color-gold-faded);
     padding: .5em;
     /* border-radius: 1em; */
-    
     --notchSize: 1rem;
     clip-path: 
       polygon(
@@ -544,7 +565,19 @@ p {
 
 .trend .username:hover {
     cursor: pointer;
-    
+    background-color: var(--color-gold-yellow);
+    --notchSize: .25em;
+    clip-path: 
+      polygon(
+        0% var(--notchSize), 
+        var(--notchSize) 0%, 
+        calc(100% - var(--notchSize)) 0%, 
+        100% var(--notchSize), 
+        100% calc(100% - var(--notchSize)), 
+        calc(100% - var(--notchSize)) 100%, 
+        var(--notchSize) 100%, 
+        0% calc(100% - var(--notchSize))
+      );
 }
 
 .trend .picture:hover {
